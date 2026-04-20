@@ -1,0 +1,46 @@
+name: stage280-signature
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  verify-signed-decision:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependency
+        run: |
+          python3 -m pip install cryptography
+
+      - name: Check required files
+        run: |
+          test -f out/stage280/evidence_summary.json
+          test -f out/stage280/decision.json
+          test -f out/stage280/decision.sha256
+          test -f out/stage280/decision.sig
+          test -f keys/ed25519_public.pem
+
+      - name: Verify signed decision
+        run: |
+          python3 tools/verify_stage280_signed_decision.py
+
+      - name: Upload signed decision artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: stage280-signed-decision-artifacts
+          path: |
+            out/stage280/evidence_summary.json
+            out/stage280/decision.json
+            out/stage280/decision.sha256
+            out/stage280/decision.sig
+            keys/ed25519_public.pem

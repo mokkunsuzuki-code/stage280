@@ -1,0 +1,37 @@
+{
+  "files": {
+    "summary": {
+      "path": "out/stage280/summary.json",
+      "sha256": "6f74151d4c78083597d79e6b0e6d69cfd3ec0a962b3d9609575e453c7b658e97"
+    },
+    "summary_ots": {
+      "path": "out/stage280/summary.json.ots",
+      "sha256": "c6e4285cabf5f9a61da393ef333ba64062348c45f29159bcb50eeb4c61385b14"
+    },
+    "summary_sha256": {
+      "path": "out/stage280/summary.sha256",
+      "sha256": "7fcae0c2e4b91af87a4a8e962254588f8dcfd3e5be98f818a8b8e3a5b3524077"
+    }
+  },
+  "generated_at_utc": "2026-04-19T13:38:41.111610+00:00",
+  "git": {
+    "branch": "main",
+    "commit": "38797ecfc0b557f4db7d9f5f31b005919d752f54"
+  },
+  "stage": "stage280",
+  "title": "Verification Manifest",
+  "verification_policy": {
+    "ots_complete_ok": true,
+    "ots_pending_ok": true,
+    "sha256_must_match": true
+  },
+  "verification_procedure": [
+    "Check that summary.json exists.",
+    "Check that summary.sha256 exists.",
+    "Check that summary.json.ots exists.",
+    "Recompute SHA-256 of summary.json.",
+    "Compare it with summary.sha256.",
+    "Run OpenTimestamps verification on summary.json.ots.",
+    "Accept both complete verification and pending Bitcoin confirmation."
+  ]
+}

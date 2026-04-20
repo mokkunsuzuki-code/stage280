@@ -1,0 +1,19 @@
+{
+  "decision": "accept",
+  "gate_model": {
+    "immediate_gate": "integrity × execution × identity",
+    "settlement_gate": "time"
+  },
+  "reason": "All gate conditions satisfied including settled time trust.",
+  "scores": {
+    "execution_trust": 1.0,
+    "identity_trust": 1.0,
+    "immediate_score": 1.0,
+    "integrity_trust": 1.0,
+    "time_trust": 1.0,
+    "total_trust": 1.0
+  },
+  "time": {
+    "ots_status": "verified"
+  }
+}

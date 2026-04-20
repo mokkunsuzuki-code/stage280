@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Stage280 Public Verification URL</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121932;
+      --panel-2: #1a2345;
+      --text: #eaf0ff;
+      --muted: #a9b5d6;
+      --ok: #34d399;
+      --warn: #fbbf24;
+      --bad: #f87171;
+      --link: #7dd3fc;
+      --border: #2a3768;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #0b1020 0%, #0d1430 100%);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.6;
+    }
+
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    .hero {
+      background: linear-gradient(180deg, rgba(125,211,252,0.08), rgba(52,211,153,0.04));
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    .eyebrow {
+      color: var(--link);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 34px;
+      line-height: 1.2;
+    }
+
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.18);
+    }
+
+    .col-8 { grid-column: span 8; }
+    .col-4 { grid-column: span 4; }
+    .col-6 { grid-column: span 6; }
+    .col-12 { grid-column: span 12; }
+
+    @media (max-width: 900px) {
+      .col-8, .col-4, .col-6, .col-12 { grid-column: span 12; }
+      h1 { font-size: 28px; }
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .decision {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: 0.04em;
+    }
+
+    .decision.accept {
+      background: rgba(52, 211, 153, 0.14);
+      color: var(--ok);
+      border: 1px solid rgba(52, 211, 153, 0.35);
+    }
+
+    .decision.pending {
+      background: rgba(251, 191, 36, 0.14);
+      color: var(--warn);
+      border: 1px solid rgba(251, 191, 36, 0.35);
+    }
+
+    .decision.reject {
+      background: rgba(248, 113, 113, 0.14);
+      color: var(--bad);
+      border: 1px solid rgba(248, 113, 113, 0.35);
+    }
+
+    .metric {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .metric:last-child { border-bottom: none; }
+
+    .metric-name {
+      color: var(--muted);
+    }
+
+    .metric-value {
+      font-weight: 700;
+      font-family: var(--mono);
+    }
+
+    .links a,
+    a {
+      color: var(--link);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    pre {
+      margin: 0;
+      padding: 16px;
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.6;
+      color: #dbe7ff;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(125,211,252,0.10);
+      border: 1px solid rgba(125,211,252,0.25);
+      color: var(--link);
+      font-size: 13px;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+
+    code {
+      font-family: var(--mono);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <div class="eyebrow">QSP / VEP / Stage280</div>
+      <h1>Public Verification URL</h1>
+      <p class="lead">
+        Stage280 externalizes the final decision so that third parties can independently reproduce
+        the same result from the same evidence.
+      </p>
+    </section>
+
+    <div class="grid">
+      <section class="card col-8">
+        <div class="label">Final Decision</div>
+        <div id="decisionBadge" class="decision accept">ACCEPT</div>
+        <p id="reasonText" class="small" style="margin-top:14px;">
+          All gate conditions satisfied including settled time trust.
+        </p>
+
+        <div style="margin-top:18px;">
+          <span class="pill">Deterministic</span>
+          <span class="pill">Externally Reproducible</span>
+          <span class="pill">SHA256 Verified</span>
+        </div>
+      </section>
+
+      <section class="card col-4">
+        <div class="label">Verification Links</div>
+        <div class="links small">
+          <p><a id="repoLink" href="https://github.com/mokkunsuzuki-code/stage280" target="_blank" rel="noopener">Repository</a></p>
+          <p><a id="actionsLink" href="https://github.com/mokkunsuzuki-code/stage280/actions" target="_blank" rel="noopener">Actions</a></p>
+          <p><a id="runLink" href="https://github.com/mokkunsuzuki-code/stage280/actions/runs/24630873431" target="_blank" rel="noopener">Verification Run</a></p>
+        </div>
+      </section>
+
+      <section class="card col-6">
+        <div class="label">Trust Scores</div>
+        <div class="metric"><span class="metric-name">Integrity Trust</span><span id="integrityTrust" class="metric-value">1</span></div>
+        <div class="metric"><span class="metric-name">Execution Trust</span><span id="executionTrust" class="metric-value">1</span></div>
+        <div class="metric"><span class="metric-name">Identity Trust</span><span id="identityTrust" class="metric-value">1</span></div>
+        <div class="metric"><span class="metric-name">Immediate Score</span><span id="immediateScore" class="metric-value">1</span></div>
+        <div class="metric"><span class="metric-name">Time Trust</span><span id="timeTrust" class="metric-value">1</span></div>
+        <div class="metric"><span class="metric-name">Total Trust</span><span id="totalTrust" class="metric-value">1</span></div>
+      </section>
+
+      <section class="card col-6">
+        <div class="label">Decision Model</div>
+        <pre>Immediate Gate = integrity × execution × identity
+Settlement Gate = time
+
+accept:
+  integrity = 1
+  execution = 1
+  identity = 1
+  time_trust = 1
+
+pending:
+  immediate gate satisfied
+  time trust exists but is not fully settled
+
+reject:
+  one or more gate conditions failed</pre>
+      </section>
+
+      <section class="card col-12">
+        <div class="label">Quick External Verification</div>
+        <pre id="verifyCommand">git clone https://github.com/mokkunsuzuki-code/stage280.git && \
+cd stage280 && \
+RUN_ID=$(gh run list --workflow stage280-decision --limit 1 --json databaseId -q '.[0].databaseId') && \
+rm -rf downloaded_stage280_decision && \
+mkdir -p downloaded_stage280_decision && \
+gh run download $RUN_ID --dir downloaded_stage280_decision && \
+python3 tools/verify_stage280_decision.py \
+  --summary downloaded_stage280_decision/stage280-decision-artifacts/evidence_summary.json \
+  --decision downloaded_stage280_decision/stage280-decision-artifacts/decision.json \
+  --sha256 downloaded_stage280_decision/stage280-decision-artifacts/decision.sha256</pre>
+      </section>
+
+      <section class="card col-12">
+        <div class="label">Decision Artifact</div>
+        <pre id="decisionJson">Loading decision.json ...</pre>
+      </section>
+    </div>
+
+    <div class="footer">
+      MIT License · Copyright (c) 2025 Motohiro Suzuki
+    </div>
+  </div>
+
+  <script>
+    async function loadDecision() {
+      try {
+        const res = await fetch('out/stage280/decision.json', { cache: 'no-store' });
+        if (!res.ok) throw new Error('decision.json not found');
+        const data = await res.json();
+
+        const decision = String(data.decision || '').toLowerCase();
+        const badge = document.getElementById('decisionBadge');
+        badge.textContent = decision.toUpperCase();
+        badge.className = 'decision ' + (decision || 'accept');
+
+        document.getElementById('reasonText').textContent = data.reason || '';
+
+        const scores = data.scores || {};
+        document.getElementById('integrityTrust').textContent = scores.integrity_trust ?? '';
+        document.getElementById('executionTrust').textContent = scores.execution_trust ?? '';
+        document.getElementById('identityTrust').textContent = scores.identity_trust ?? '';
+        document.getElementById('immediateScore').textContent = scores.immediate_score ?? '';
+        document.getElementById('timeTrust').textContent = scores.time_trust ?? '';
+        document.getElementById('totalTrust').textContent = scores.total_trust ?? '';
+
+        document.getElementById('decisionJson').textContent =
+          JSON.stringify(data, null, 2);
+      } catch (err) {
+        document.getElementById('decisionJson').textContent =
+          'decision.json could not be loaded from out/stage280/decision.json';
+      }
+    }
+
+    loadDecision();
+  </script>
+</body>
+</html>

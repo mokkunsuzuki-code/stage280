@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.DS_Store
+
+keys/ed25519_private.pem
+
+downloaded_stage280_signed_decision/
+stage280/
+
+!out/
+!out/stage280/
+!out/stage280/evidence_summary.json

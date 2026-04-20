@@ -1,0 +1,32 @@
+{
+  "artifact": {
+    "manifest_file": "out/stage280/manifest.json",
+    "ots_file": "out/stage280/summary.json.ots",
+    "sha256_file": "out/stage280/summary.sha256",
+    "summary_file": "out/stage280/summary.json"
+  },
+  "claim": {
+    "what_this_stage_does_not_prove": [
+      "Direct Bitcoin on-chain inscription by this repository alone.",
+      "Immediate Bitcoin finality at workflow runtime.",
+      "Identity proof beyond repository/workflow context."
+    ],
+    "what_this_stage_proves": [
+      "A deterministic summary is generated.",
+      "The summary is hashed with SHA-256.",
+      "The summary is externally anchored via OpenTimestamps.",
+      "A manifest packages the evidence set.",
+      "A fixed verification procedure can reproduce the verification result."
+    ]
+  },
+  "environment": {
+    "repo_root": "/Users/motohiro/Desktop/test/stage280"
+  },
+  "generated_at_utc": "2026-04-19T13:38:41.111610+00:00",
+  "git": {
+    "branch": "main",
+    "commit": "38797ecfc0b557f4db7d9f5f31b005919d752f54"
+  },
+  "stage": "stage280",
+  "title": "Manifest Packaging for Reproducible Verification"
+}
