@@ -36,6 +36,40 @@ python3 tools/verify_stage280_signed_decision.py
 
 ---
 
+## Quick External Verification
+
+git clone https://github.com/mokkunsuzuki-code/stage280.git && \
+cd stage280 && \
+python3 -m pip install cryptography && \
+RUN_ID=$(gh run list --workflow stage280-signature --limit 1 --json databaseId -q '.[0].databaseId') && \
+rm -rf downloaded_stage280_signed_decision && \
+mkdir -p downloaded_stage280_signed_decision && \
+gh run download $RUN_ID --dir downloaded_stage280_signed_decision && \
+python3 tools/verify_stage280_signed_decision.py \
+  --summary downloaded_stage280_signed_decision/stage280-signed-decision-artifacts/out/stage280/evidence_summary.json \
+  --decision downloaded_stage280_signed_decision/stage280-signed-decision-artifacts/out/stage280/decision.json \
+  --sha256 downloaded_stage280_signed_decision/stage280-signed-decision-artifacts/out/stage280/decision.sha256 \
+  --signature downloaded_stage280_signed_decision/stage280-signed-decision-artifacts/out/stage280/decision.sig \
+  --public-key downloaded_stage280_signed_decision/stage280-signed-decision-artifacts/keys/ed25519_public.pem
+
+---
+
+## Public Verification URL
+
+After Pages deployment, the public verification page will be available at:
+
+- https://mokkunsuzuki-code.github.io/stage280/
+
+This page shows:
+
+- final decision
+- trust scores
+- signature verification status
+- public key
+- one-command external verification path
+
+---
+
 ## What This Stage Proves
 
 - decision is deterministic

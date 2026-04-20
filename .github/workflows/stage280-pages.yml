@@ -1,0 +1,61 @@
+name: stage280-pages
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Install dependency
+        run: |
+          python3 -m pip install cryptography
+
+      - name: Verify signed decision
+        run: |
+          test -f out/stage280/evidence_summary.json
+          test -f out/stage280/decision.json
+          test -f out/stage280/decision.sha256
+          test -f out/stage280/decision.sig
+          test -f keys/ed25519_public.pem
+          python3 tools/verify_stage280_signed_decision.py
+
+      - name: Prepare Pages artifact
+        run: |
+          mkdir -p _site
+          cp -R docs/* _site/
+          mkdir -p _site/out/stage280
+          mkdir -p _site/keys
+          cp out/stage280/decision.json _site/out/stage280/decision.json
+          cp keys/ed25519_public.pem _site/keys/ed25519_public.pem
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy-pages:
+    environment:
+      name: github-pages
+    runs-on: ubuntu-latest
+    needs: build-pages
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4

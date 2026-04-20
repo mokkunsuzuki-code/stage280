@@ -207,8 +207,8 @@
       <div class="eyebrow">QSP / VEP / Stage280</div>
       <h1>Public Verification URL</h1>
       <p class="lead">
-        Stage280 externalizes the final decision so that third parties can independently reproduce
-        the same result from the same evidence.
+        Stage280 adds issuer authenticity to externally reproducible decisions.
+        Third parties can verify not only the decision result, but also the signature over that decision.
       </p>
     </section>
 
@@ -222,17 +222,17 @@
 
         <div style="margin-top:18px;">
           <span class="pill">Deterministic</span>
-          <span class="pill">Externally Reproducible</span>
           <span class="pill">SHA256 Verified</span>
+          <span class="pill">Signature Verified</span>
         </div>
       </section>
 
       <section class="card col-4">
         <div class="label">Verification Links</div>
         <div class="links small">
-          <p><a id="repoLink" href="https://github.com/mokkunsuzuki-code/stage280" target="_blank" rel="noopener">Repository</a></p>
-          <p><a id="actionsLink" href="https://github.com/mokkunsuzuki-code/stage280/actions" target="_blank" rel="noopener">Actions</a></p>
-          <p><a id="runLink" href="https://github.com/mokkunsuzuki-code/stage280/actions/runs/24630873431" target="_blank" rel="noopener">Verification Run</a></p>
+          <p><a href="https://github.com/mokkunsuzuki-code/stage280" target="_blank" rel="noopener">Repository</a></p>
+          <p><a href="https://github.com/mokkunsuzuki-code/stage280/actions" target="_blank" rel="noopener">Actions</a></p>
+          <p><a id="runLink" href="#" target="_blank" rel="noopener">Latest Verification Run</a></p>
         </div>
       </section>
 
@@ -247,41 +247,37 @@
       </section>
 
       <section class="card col-6">
-        <div class="label">Decision Model</div>
-        <pre>Immediate Gate = integrity × execution × identity
-Settlement Gate = time
-
-accept:
-  integrity = 1
-  execution = 1
-  identity = 1
-  time_trust = 1
-
-pending:
-  immediate gate satisfied
-  time trust exists but is not fully settled
-
-reject:
-  one or more gate conditions failed</pre>
+        <div class="label">Signature Status</div>
+        <div class="metric"><span class="metric-name">Decision Signature</span><span class="metric-value">VERIFIED</span></div>
+        <div class="metric"><span class="metric-name">Public Key</span><span class="metric-value">PUBLISHED</span></div>
+        <div class="metric"><span class="metric-name">Decision SHA256</span><span class="metric-value">CHECKED</span></div>
       </section>
 
       <section class="card col-12">
-        <div class="label">Quick External Verification</div>
-        <pre id="verifyCommand">git clone https://github.com/mokkunsuzuki-code/stage280.git && \
+        <div class="label">One-Command External Verification</div>
+        <pre>git clone https://github.com/mokkunsuzuki-code/stage280.git && \
 cd stage280 && \
-RUN_ID=$(gh run list --workflow stage280-decision --limit 1 --json databaseId -q '.[0].databaseId') && \
-rm -rf downloaded_stage280_decision && \
-mkdir -p downloaded_stage280_decision && \
-gh run download $RUN_ID --dir downloaded_stage280_decision && \
-python3 tools/verify_stage280_decision.py \
-  --summary downloaded_stage280_decision/stage280-decision-artifacts/evidence_summary.json \
-  --decision downloaded_stage280_decision/stage280-decision-artifacts/decision.json \
-  --sha256 downloaded_stage280_decision/stage280-decision-artifacts/decision.sha256</pre>
+python3 -m pip install cryptography && \
+RUN_ID=$(gh run list --workflow stage280-signature --limit 1 --json databaseId -q '.[0].databaseId') && \
+rm -rf downloaded_stage280_signed_decision && \
+mkdir -p downloaded_stage280_signed_decision && \
+gh run download $RUN_ID --dir downloaded_stage280_signed_decision && \
+python3 tools/verify_stage280_signed_decision.py \
+  --summary downloaded_stage280_signed_decision/stage280-signed-decision-artifacts/out/stage280/evidence_summary.json \
+  --decision downloaded_stage280_signed_decision/stage280-signed-decision-artifacts/out/stage280/decision.json \
+  --sha256 downloaded_stage280_signed_decision/stage280-signed-decision-artifacts/out/stage280/decision.sha256 \
+  --signature downloaded_stage280_signed_decision/stage280-signed-decision-artifacts/out/stage280/decision.sig \
+  --public-key downloaded_stage280_signed_decision/stage280-signed-decision-artifacts/keys/ed25519_public.pem</pre>
       </section>
 
       <section class="card col-12">
         <div class="label">Decision Artifact</div>
         <pre id="decisionJson">Loading decision.json ...</pre>
+      </section>
+
+      <section class="card col-12">
+        <div class="label">Public Key</div>
+        <pre id="publicKeyText">Loading public key ...</pre>
       </section>
     </div>
 
@@ -320,7 +316,21 @@ python3 tools/verify_stage280_decision.py \
       }
     }
 
+    async function loadPublicKey() {
+      try {
+        const res = await fetch('keys/ed25519_public.pem', { cache: 'no-store' });
+        if (!res.ok) throw new Error('public key not found');
+        const text = await res.text();
+        document.getElementById('publicKeyText').textContent = text;
+      } catch (err) {
+        document.getElementById('publicKeyText').textContent =
+          'ed25519_public.pem could not be loaded from keys/ed25519_public.pem';
+      }
+    }
+
+    document.getElementById('runLink').href = 'https://github.com/mokkunsuzuki-code/stage280/actions';
     loadDecision();
+    loadPublicKey();
   </script>
 </body>
 </html>
